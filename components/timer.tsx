@@ -10,6 +10,8 @@ export function Timer() {
   const [cycle, setCycle] = useState(1)
   const [isActive, setIsActive] = useState(false)
   const [playClockTick] = useSound("/assets/sounds/clock-tick.mp3")
+  const [playCycleEnd] = useSound("/assets/sounds/end-cycle.mp3")
+  const [playReset] = useSound("/assets/sounds/mouse-click.mp3", { volume: 0.35 })
 
   const pomodoro = (60 * 25)
   const shortBreak = (60 * 5)
@@ -23,6 +25,7 @@ export function Timer() {
 
   function resetTimer() {
     setIsActive(false)
+    playReset()
 
     if (cycle % 2 === 0) {
       if (cycle === 8) {
@@ -76,6 +79,7 @@ export function Timer() {
     }
 
     setIsActive(false)
+    playCycleEnd()
   }
 
   return (
