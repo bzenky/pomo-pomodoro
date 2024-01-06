@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Nunito } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const nunito = Nunito({
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
   title: 'Pomo-Pomodoro',
@@ -15,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={nunito.className}>
+      <body className="antialiased">
         {children}
       </body>
     </html>

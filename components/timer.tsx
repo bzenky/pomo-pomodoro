@@ -87,12 +87,12 @@ export function Timer() {
   if (timer === 0) handleCycle()
 
   return (
-    <div className="flex flex-col">
-      <span className="text-center text-5xl font-semibold">
+    <div className="flex flex-col bg-sky-50/10 px-12 py-10 rounded">
+      <span className="text-center text-7xl font-semibold">
         {minutes}:{seconds}
       </span>
 
-      <div className="flex justify-center gap-4 mt-8">
+      <div className="flex justify-center gap-4 mt-10">
         <Button
           onClick={handleTimer}
           size="lg"
@@ -116,7 +116,7 @@ export function Timer() {
                 <button type="button" onClick={handleCycle}>
                   <SkipForward
                     size={32}
-                    className="text-red-700"
+                    className="text-red-700 hover:text-red-800 transition-colors"
                   />
                 </button>
               </TooltipTrigger>
