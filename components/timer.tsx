@@ -84,10 +84,11 @@ export function Timer() {
         {minutes}:{seconds}
       </span>
 
-      <div className="flex gap-4 mt-8">
+      <div className="flex justify-center gap-4 mt-8">
         <Button
           onClick={handleTimer}
           size="lg"
+          className="bg-lime-700 hover:bg-lime-800 active:hover:bg-lime-900 shadow-sm"
         >
           {isActive ? 'Pause' : 'Start'}
         </Button>
@@ -95,6 +96,7 @@ export function Timer() {
         <Button
           onClick={resetTimer}
           size="lg"
+          className="bg-amber-500 hover:bg-amber-600 active:hover:bg-amber-700 shadow-sm"
         >
           Reset
         </Button>
