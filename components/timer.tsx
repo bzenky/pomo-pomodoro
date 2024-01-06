@@ -27,7 +27,7 @@ export function Timer() {
 
     if (isActive) {
       interval = setInterval(() => {
-        setTimer((prevSeconds) => prevSeconds - 300);
+        setTimer((prevSeconds) => prevSeconds - 1);
       }, 1000);
     } else {
       clearInterval(interval);
@@ -66,6 +66,8 @@ export function Timer() {
       setCycle(cycle => cycle + 1)
       setTimer(shortBreak)
     }
+
+    setIsActive(false)
   }
 
   return (
