@@ -11,6 +11,10 @@ export function Timer() {
   const [isActive, setIsActive] = useState(false)
   const [playClockTick] = useSound("/assets/sounds/clock-tick.mp3")
 
+  const pomodoro = (60 * 25)
+  const shortBreak = (60 * 5)
+  const longBreak = (60 * 15)
+
   function handleTimer() {
     setIsActive(active => !active)
 
@@ -19,7 +23,16 @@ export function Timer() {
 
   function resetTimer() {
     setIsActive(false)
-    setTimer(25 * 60)
+
+    if (cycle % 2 === 0) {
+      if (cycle === 8) {
+        setTimer(longBreak)
+      } else {
+        setTimer(shortBreak)
+      }
+    } else {
+      setTimer(pomodoro)
+    }
   }
 
   useEffect(() => {
@@ -40,10 +53,6 @@ export function Timer() {
   const secondsCalc = timer - (minutes * 60)
   const seconds = String(secondsCalc).padStart(2, '0')
 
-  const pomodoro = (60 * 25)
-  const shortBreak = (60 * 5)
-  const longBreak = (60 * 15)
-
   function handleStart() {
     if (isActive) return
 
@@ -54,11 +63,10 @@ export function Timer() {
     if (cycle % 2 === 0) {
       if (cycle === 8) {
         setCycle(1)
-        setTimer(pomodoro)
       } else {
         setCycle(cycle => cycle + 1)
-        setTimer(pomodoro)
       }
+      setTimer(pomodoro)
     } else if (cycle === 7) {
       setTimer(longBreak)
       setCycle(cycle => cycle + 1)
@@ -81,12 +89,13 @@ export function Timer() {
           onClick={handleTimer}
           size="lg"
         >
-          {
-            isActive ? 'Pause' : 'Start'
-          }
+          {isActive ? 'Pause' : 'Start'}
         </Button>
 
-        <Button onClick={resetTimer} size="lg">
+        <Button
+          onClick={resetTimer}
+          size="lg"
+        >
           Reset
         </Button>
       </div>
