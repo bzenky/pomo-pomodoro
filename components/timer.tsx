@@ -7,27 +7,35 @@ import { SkipForward } from "lucide-react";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
+type CycleProp = 'pomodoro' | 'shortBreak' | 'longBreak'
+
 export function Timer() {
   const [timer, setTimer] = useState(25 * 60)
   const [cycle, setCycle] = useState(1)
+  const [cycleType, setCycleType] = useState<CycleProp>('pomodoro')
   const [isActive, setIsActive] = useState(false)
   const [playClockTick] = useSound("/assets/sounds/clock-tick.mp3")
   const [playCycleEnd] = useSound("/assets/sounds/end-cycle.mp3")
-  const [playReset] = useSound("/assets/sounds/mouse-click.mp3", { volume: 0.35 })
+  const [playMouseClick] = useSound("/assets/sounds/mouse-click.mp3", { volume: 0.35 })
 
   const pomodoro = (60 * 25)
   const shortBreak = (60 * 5)
   const longBreak = (60 * 15)
+  const minutes = secondsToMinutes(timer)
+  const secondsCalc = timer - (minutes * 60)
+  const seconds = String(secondsCalc).padStart(2, '0')
 
   function handleTimer() {
     setIsActive(active => !active)
 
-    handleStart()
+    if (isActive) return
+
+    playClockTick()
   }
 
-  function resetTimer() {
+  function handleReset() {
     setIsActive(false)
-    playReset()
+    playMouseClick()
 
     if (cycle % 2 === 0) {
       if (cycle === 8) {
@@ -39,6 +47,48 @@ export function Timer() {
       setTimer(pomodoro)
     }
   }
+
+  function handleCycleType(type: CycleProp) {
+    if (type === 'pomodoro') {
+      setCycle(1)
+      setTimer(pomodoro)
+    } else if (type === 'shortBreak') {
+      setCycle(2)
+      setTimer(shortBreak)
+    } else {
+      setCycle(8)
+      setTimer(longBreak)
+    }
+
+    setCycleType(type)
+    setIsActive(false)
+    playMouseClick()
+  }
+
+  function handleCycle() {
+    if (cycle % 2 === 0) {
+      if (cycle === 8) {
+        setCycle(1)
+      } else {
+        setCycle(cycle => cycle + 1)
+      }
+      setTimer(pomodoro)
+      setCycleType('pomodoro')
+    } else if (cycle === 7) {
+      setTimer(longBreak)
+      setCycle(cycle => cycle + 1)
+      setCycleType('longBreak')
+    } else {
+      setTimer(shortBreak)
+      setCycle(cycle => cycle + 1)
+      setCycleType('shortBreak')
+    }
+
+    setIsActive(false)
+    playCycleEnd()
+  }
+
+  if (timer === 0) handleCycle()
 
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
@@ -54,45 +104,45 @@ export function Timer() {
     return () => clearInterval(interval);
   }, [isActive])
 
-  const minutes = secondsToMinutes(timer)
-  const secondsCalc = timer - (minutes * 60)
-  const seconds = String(secondsCalc).padStart(2, '0')
-
-  function handleStart() {
-    if (isActive) return
-
-    playClockTick()
-  }
-
-  function handleCycle() {
-    if (cycle % 2 === 0) {
-      if (cycle === 8) {
-        setCycle(1)
-      } else {
-        setCycle(cycle => cycle + 1)
-      }
-      setTimer(pomodoro)
-    } else if (cycle === 7) {
-      setTimer(longBreak)
-      setCycle(cycle => cycle + 1)
-    } else {
-      setCycle(cycle => cycle + 1)
-      setTimer(shortBreak)
-    }
-
-    setIsActive(false)
-    playCycleEnd()
-  }
-
-  if (timer === 0) handleCycle()
-
   return (
-    <div className="flex flex-col bg-sky-50/10 px-12 py-10 rounded">
-      <span className="text-center text-7xl font-semibold">
+    <div className="flex flex-col bg-sky-50/10 px-10 pb-10 pt-6  rounded">
+      <div className="flex justify-between">
+        <Button
+          type="button"
+          size="sm"
+          className={`${(cycleType === 'pomodoro') && 'bg-red-700 text-white'} hover:bg-red-800 hover:text-white active:bg-red-900 font-semibold -colors`}
+          variant="ghost"
+          onClick={() => handleCycleType('pomodoro')}
+        >
+          pomodoro
+        </Button>
+
+        <Button
+          type="button"
+          size="sm"
+          variant="ghost"
+          className={`${(cycleType === 'shortBreak') && 'bg-red-700 text-white'} hover:bg-red-800 hover:text-white active:bg-red-900 font-semibold transition-colors`}
+          onClick={() => handleCycleType('shortBreak')}
+        >
+          short break
+        </Button>
+
+        <Button
+          type="button"
+          size="sm"
+          variant="ghost"
+          className={`${(cycleType === 'longBreak') && 'bg-red-700 text-white'} hover:bg-red-800 active:bg-red-900 hover:text-white font-semibold transition-colors`}
+          onClick={() => handleCycleType('longBreak')}
+        >
+          long break
+        </Button>
+      </div>
+
+      <span className="text-center text-7xl font-semibold mt-10 mb-10">
         {minutes}:{seconds}
       </span>
 
-      <div className="flex justify-center gap-4 mt-10">
+      <div className="flex justify-center gap-4">
         <Button
           onClick={handleTimer}
           size="lg"
@@ -102,7 +152,7 @@ export function Timer() {
         </Button>
 
         <Button
-          onClick={resetTimer}
+          onClick={handleReset}
           size="lg"
           className="bg-amber-500 hover:bg-amber-600 active:hover:bg-amber-700 shadow-sm"
         >
