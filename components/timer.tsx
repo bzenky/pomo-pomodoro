@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { secondsToMinutes } from "date-fns";
 import useSound from 'use-sound';
+import { SkipForward } from "lucide-react";
 import { Button } from "./ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
 export function Timer() {
   const [timer, setTimer] = useState(25 * 60)
@@ -62,7 +64,7 @@ export function Timer() {
     playClockTick()
   }
 
-  if (timer === 0) {
+  function handleCycle() {
     if (cycle % 2 === 0) {
       if (cycle === 8) {
         setCycle(1)
@@ -81,6 +83,8 @@ export function Timer() {
     setIsActive(false)
     playCycleEnd()
   }
+
+  if (timer === 0) handleCycle()
 
   return (
     <div className="flex flex-col">
@@ -104,6 +108,25 @@ export function Timer() {
         >
           Reset
         </Button>
+
+        {isActive && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button type="button" onClick={handleCycle}>
+                  <SkipForward
+                    size={32}
+                    className="text-red-700"
+                  />
+                </button>
+              </TooltipTrigger>
+
+              <TooltipContent>
+                <span>Finish current cycle and go to the next one</span>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
       </div>
     </div>
   )
