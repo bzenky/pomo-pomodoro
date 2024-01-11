@@ -6,6 +6,7 @@ import useSound from 'use-sound';
 import { SkipForward } from "lucide-react";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import { Progress } from "./ui/progress";
 
 type CycleProp = 'pomodoro' | 'shortBreak' | 'longBreak'
 
@@ -24,6 +25,7 @@ export function Timer() {
   const minutes = secondsToMinutes(timer)
   const secondsCalc = timer - (minutes * 60)
   const seconds = String(secondsCalc).padStart(2, '0')
+  const progress = (1 - (timer / eval(cycleType))) * 100
 
   function handleTimer() {
     setIsActive(active => !active)
@@ -138,9 +140,18 @@ export function Timer() {
         </Button>
       </div>
 
-      <span className="text-center text-7xl font-semibold mt-10 mb-10">
-        {minutes}:{seconds}
-      </span>
+      <div className="flex justify-center flex-col mt-10 mb-10">
+        <span className="text-center text-7xl font-semibold">
+          {minutes}:{seconds}
+        </span>
+
+        <div className="mt-5 px-4">
+          <Progress
+            value={progress}
+            className="bg-secondary/70 h-2 "
+          />
+        </div>
+      </div>
 
       <div className="flex justify-center gap-4">
         <Button
