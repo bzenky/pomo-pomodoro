@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={nunito.className}>
-      <body className="antialiased">
+      <body className="antialiased scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-300">
         {children}
         <SpeedInsights />
       </body>
