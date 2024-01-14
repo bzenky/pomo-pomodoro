@@ -107,7 +107,7 @@ export function Timer() {
   }, [isActive])
 
   return (
-    <div className="flex flex-col bg-sky-50/10 px-10 pb-10 pt-6  rounded">
+    <div className="flex flex-col bg-sky-50/10 px-10 pb-10 pt-6 rounded">
       <div className="flex justify-between">
         <Button
           type="button"
