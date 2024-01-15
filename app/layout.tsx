@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { GoogleTagManager } from '@next/third-parties/google'
 import './globals.css'
 
 const nunito = Nunito({
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className="antialiased scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-300">
         {children}
         <SpeedInsights />
+        <GoogleTagManager gtmId='G-0EQRT3GR5Z' />
       </body>
     </html>
   )
