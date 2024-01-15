@@ -23,8 +23,9 @@ export default function RootLayout({
       <body className="antialiased scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-300">
         {children}
         <SpeedInsights />
-        <GoogleTagManager gtmId='G-0EQRT3GR5Z' />
       </body>
+
+      <GoogleTagManager gtmId='G-0EQRT3GR5Z' />
     </html>
   )
 }
