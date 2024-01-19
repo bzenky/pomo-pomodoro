@@ -3,6 +3,7 @@ import { Nunito } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleTagManager } from '@next/third-parties/google'
 import './globals.css'
+import { ThemeProvider } from '@/components/theme/theme-provider';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -21,7 +22,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={nunito.className}>
       <body className="antialiased scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-zinc-300">
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+          storageKey='@pomo-pomodoro'
+        >
+          {children}
+        </ThemeProvider>
+
         <SpeedInsights />
       </body>
 

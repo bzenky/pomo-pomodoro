@@ -1,6 +1,6 @@
 export function Article() {
   return (
-    <div className="w-full bg-zinc-100 flex justify-center p-10">
+    <div className="w-full bg-zinc-100 flex justify-center p-10 dark:bg-zinc-700">
       <div className="max-w-5xl text-lg leading-relaxed">
         <h2 className="text-4xl leading-tight mb-4 font-bold">Understanding the Pomodoro Technique</h2>
         <p className="">The Pomodoro Technique is based on the principle of breaking work into intervals, traditionally 25 minutes in length, separated by short breaks. Each 25-minute work interval is referred to as a &quot;Pomodoro&quot;, and after completing four Pomodoros, a more extended break of 15-30 minutes is taken. The technique is built on the idea that the timer creates a sense of urgency, fostering a focused and immersive work environment. You can adapt the time to be more effective and to what fits your needs.</p>

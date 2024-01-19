@@ -148,7 +148,7 @@ export function Timer() {
         <div className="mt-5 px-4">
           <Progress
             value={progress}
-            className="bg-secondary/70 h-2 "
+            className="bg-secondary/70 h-2 dark:bg-zinc-500"
           />
         </div>
       </div>
@@ -157,7 +157,7 @@ export function Timer() {
         <Button
           onClick={handleTimer}
           size="lg"
-          className="bg-lime-700 hover:bg-lime-800 active:hover:bg-lime-900 shadow-sm"
+          className="bg-lime-700 hover:bg-lime-800 active:hover:bg-lime-900 shadow-sm dark:text-zinc-50"
         >
           {isActive ? 'Pause' : 'Start'}
         </Button>
@@ -165,7 +165,7 @@ export function Timer() {
         <Button
           onClick={handleReset}
           size="lg"
-          className="bg-amber-500 hover:bg-amber-600 active:hover:bg-amber-700 shadow-sm"
+          className="bg-amber-500 hover:bg-amber-600 active:hover:bg-amber-700 shadow-sm dark:text-zinc-50"
         >
           Reset
         </Button>
