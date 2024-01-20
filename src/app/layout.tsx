@@ -3,7 +3,7 @@ import { Nunito } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleTagManager } from '@next/third-parties/google'
 import './globals.css'
-import { ThemeProvider } from '@/components/theme/theme-provider';
+import { ThemeProvider } from '../components/theme/theme-provider';
 
 const nunito = Nunito({
   subsets: ['latin'],
