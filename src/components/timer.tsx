@@ -7,20 +7,22 @@ import { SkipForward } from "lucide-react";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import { Progress } from "./ui/progress";
-import { useStore } from "@/store";
+import { CycleProps, useStore } from "@/store";
 import { defaultTimes } from "@/utils/constants";
-
-type CycleProp = 'pomodoro' | 'shortBreak' | 'longBreak'
 
 export function Timer() {
   const {
     timer,
     cycle,
+    cycleType,
     updateTimer,
-    updateCycle
+    updateCycle,
+    pomodoroTimer,
+    shortBreakTimer,
+    longBreakTimer,
+    isActive
   } = useStore()
-  const [cycleType, setCycleType] = useState<CycleProp>('pomodoro')
-  const [isActive, setIsActive] = useState(false)
+
   const [playClockTick] = useSound("/assets/sounds/clock-tick.mp3")
   const [playCycleEnd] = useSound("/assets/sounds/end-cycle.mp3")
   const [playMouseClick] = useSound("/assets/sounds/mouse-click.mp3", { volume: 0.35 })
@@ -31,7 +33,7 @@ export function Timer() {
   const progress = (1 - (timer / defaultTimes[cycleType])) * 100
 
   function handleTimer() {
-    setIsActive(active => !active)
+    useStore.setState({ isActive: !isActive })
 
     if (isActive) return
 
@@ -39,41 +41,43 @@ export function Timer() {
   }
 
   function handleReset() {
-    setIsActive(false)
+    useStore.setState({ isActive: false })
     playMouseClick()
 
     if (cycle % 2 === 0) {
       if (cycle === 8) {
-        useStore.setState({ timer: defaultTimes.longBreak })
+        useStore.setState({ timer: longBreakTimer })
       } else {
-        useStore.setState({ timer: defaultTimes.shortBreak })
+        useStore.setState({ timer: shortBreakTimer })
       }
     } else {
-      useStore.setState({ timer: defaultTimes.pomodoro })
+      useStore.setState({ timer: pomodoroTimer })
     }
   }
 
-  function handleCycleType(type: CycleProp) {
+  function handleCycleType(type: CycleProps) {
     if (type === 'pomodoro') {
       useStore.setState({
         cycle: 1,
-        timer: defaultTimes.pomodoro
+        timer: pomodoroTimer
       })
-      useStore.setState({ timer: defaultTimes.pomodoro })
+      useStore.setState({ timer: pomodoroTimer })
     } else if (type === 'shortBreak') {
       useStore.setState({
         cycle: 2,
-        timer: defaultTimes.shortBreak
+        timer: shortBreakTimer
       })
     } else {
       useStore.setState({
         cycle: 8,
-        timer: defaultTimes.longBreak
+        timer: longBreakTimer
       })
     }
 
-    setCycleType(type)
-    setIsActive(false)
+    useStore.setState({
+      isActive: false,
+      cycleType: type
+    })
     playMouseClick()
   }
 
@@ -85,19 +89,25 @@ export function Timer() {
 
         updateCycle()
       }
-      useStore.setState({ timer: defaultTimes.pomodoro })
-      setCycleType('pomodoro')
+      useStore.setState({
+        timer: pomodoroTimer,
+        cycleType: 'pomodoro'
+      })
     } else if (cycle === 7) {
-      useStore.setState({ timer: defaultTimes.longBreak })
+      useStore.setState({
+        timer: longBreakTimer,
+        cycleType: 'longBreak'
+      })
       updateCycle()
-      setCycleType('longBreak')
     } else {
-      useStore.setState({ timer: defaultTimes.shortBreak })
+      useStore.setState({
+        timer: shortBreakTimer,
+        cycleType: 'shortBreak'
+      })
       updateCycle()
-      setCycleType('shortBreak')
     }
 
-    setIsActive(false)
+    useStore.setState({ isActive: false })
     playCycleEnd()
   }
 
