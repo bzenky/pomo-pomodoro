@@ -21,6 +21,7 @@ interface StoreProps {
   updateTimer: () => void
   updateCycle: () => void
   editTimer: ({ pomodoroTimer, shortBreakTimer, longBreakTimer }: EditTimerProps) => void
+  backgroundType: string
 }
 
 export const useStore = create<StoreProps>((set, get) => {
@@ -45,6 +46,7 @@ export const useStore = create<StoreProps>((set, get) => {
         isDefaultTimer: false,
         isActive: false,
       })
-    }
+    },
+    backgroundType: 'default'
   }
 })

@@ -74,3 +74,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+div.videoBackgroundPlayer video {
+  width: inherit !important;
+  height: inherit !important;
+  max-width: inherit !important;
+}

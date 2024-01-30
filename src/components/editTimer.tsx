@@ -128,6 +128,5 @@ export function EditTimer() {
         </Form>
       </PopoverContent>
     </Popover>
-
   )
 }
