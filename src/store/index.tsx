@@ -22,6 +22,17 @@ interface StoreProps {
   updateCycle: () => void
   editTimer: ({ pomodoroTimer, shortBreakTimer, longBreakTimer }: EditTimerProps) => void
   backgroundType: string
+  soundsVolume: {
+    rain: {
+      volume: number
+    },
+    seaWaves: {
+      volume: number
+    },
+    keyboard: {
+      volume: number
+    },
+  }
 }
 
 export const useStore = create<StoreProps>((set, get) => {
@@ -47,6 +58,11 @@ export const useStore = create<StoreProps>((set, get) => {
         isActive: false,
       })
     },
-    backgroundType: 'default'
+    backgroundType: 'default',
+    soundsVolume: {
+      rain: { volume: 0.50 },
+      seaWaves: { volume: 0.50 },
+      keyboard: { volume: 0.50 }
+    }
   }
 })

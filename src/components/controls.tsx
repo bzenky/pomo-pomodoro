@@ -1,3 +1,4 @@
+import { BackgroundSound } from "./backgroundSound";
 import { EditBackground } from "./editBackground";
 import { EditTimer } from "./editTimer";
 import { ThemeToggle } from "./theme/theme-toggle";
@@ -10,7 +11,7 @@ export function Controls() {
         <EditBackground />
 
         <ThemeToggle />
-
+        <BackgroundSound />
       </div>
     </div>
   )

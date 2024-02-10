@@ -2,14 +2,27 @@
 
 import { useState } from "react";
 import { Image as ImageIcon } from "lucide-react";
+import ReactAudioPlayer from 'react-audio-player'
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useStore } from "@/store";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Slider } from "./ui/slider";
 
 export function EditBackground() {
   const [open, setOpen] = useState(false)
-  const { backgroundType } = useStore()
+  const { backgroundType, soundsVolume } = useStore()
+
+  function updateSoundVolume(type: string, volume: number) {
+    useStore.setState({
+      soundsVolume: {
+        ...soundsVolume,
+        [type]: {
+          volume
+        }
+      }
+    })
+  }
 
   function setSelectedBackgroundType(value: string) {
     useStore.setState({
@@ -34,22 +47,49 @@ export function EditBackground() {
         >
           <div className="flex items-center gap-2">
             <RadioGroupItem value="default" id="default" />
-            <label htmlFor="default">Default</label>
+            <label htmlFor="default" className="cursor-pointer">Default</label>
           </div>
 
           <div className="flex items-center gap-2">
             <RadioGroupItem value="rainy" id="rainy" />
-            <label htmlFor="rainy">Rainy</label>
+            <label htmlFor="rainy" className="cursor-pointer">Rainy</label>
+
+            {backgroundType === 'rainy' && (
+              <Slider defaultValue={[50]}
+                max={100}
+                step={1}
+                value={[soundsVolume.rain.volume * 100]}
+                onValueChange={([value]) => updateSoundVolume('rain', value / 100)}
+              />
+            )}
           </div>
 
           <div className="flex items-center gap-2">
             <RadioGroupItem value="sea" id="sea" />
-            <label htmlFor="sea">Sea</label>
+            <label htmlFor="sea" className="cursor-pointer">Sea</label>
+
+            {backgroundType === 'sea' && (
+              <Slider
+                max={100}
+                step={1}
+                value={[soundsVolume.seaWaves.volume * 100]}
+                onValueChange={([value]) => updateSoundVolume('seaWaves', value / 100)}
+              />
+            )}
           </div>
 
           <div className="flex items-center gap-2">
             <RadioGroupItem value="keyboard" id="keyboard" />
-            <label htmlFor="keyboard">Keyboard</label>
+            <label htmlFor="keyboard" className="cursor-pointer">Keyboard</label>
+
+            {backgroundType === 'keyboard' && (
+              <Slider
+                max={100}
+                step={1}
+                value={[soundsVolume.keyboard.volume * 100]}
+                onValueChange={([value]) => updateSoundVolume('keyboard', value / 100)}
+              />
+            )}
           </div>
         </RadioGroup>
       </PopoverContent>
