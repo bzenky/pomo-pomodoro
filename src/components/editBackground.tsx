@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react";
-import { Image } from "lucide-react";
+import { Image as ImageIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useStore } from "@/store";
@@ -21,9 +21,7 @@ export function EditBackground() {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" size="icon">
-          {/* Rule disabled because Image component it´s an icon not Image from Next */}
-          {/*eslint-disable-next-line jsx-a11y/alt-text*/}
-          <Image className="h-[1rem] w-[1rem] rotate-0 scale-100 transition-all" />
+          <ImageIcon className="h-[1rem] w-[1rem] rotate-0 scale-100 transition-all" />
           <span className="sr-only">Choose Background</span>
         </Button>
       </PopoverTrigger>
