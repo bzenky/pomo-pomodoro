@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { secondsToMinutes } from "date-fns";
 import useSound from 'use-sound';
 import { SkipForward } from "lucide-react";
@@ -191,7 +191,6 @@ export function Timer() {
           Reset
         </Button>
 
-        {isActive && (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -208,7 +207,6 @@ export function Timer() {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-        )}
       </div>
     </div>
   )
