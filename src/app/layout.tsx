@@ -1,23 +1,24 @@
-import type { Metadata } from 'next'
-import { Nunito } from 'next/font/google'
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { GoogleTagManager } from '@next/third-parties/google'
-import './globals.css'
-import { ThemeProvider } from '../components/theme/theme-provider';
+import type { Metadata } from "next";
+import { Nunito } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import "./globals.css";
+import { ThemeProvider } from "../components/theme/theme-provider";
 
 const nunito = Nunito({
-  subsets: ['latin'],
-})
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: 'Pomo-Pomodoro',
-  description: 'Pomo-Pomodoro is a great partner for everyone achieve your goals. It´s simple, accessible and flexible. Give a boost in your focus and results using the Pomodoro technique.',
-}
+  title: "Pomo-Pomodoro",
+  description:
+    "Pomo-Pomodoro is a great partner for everyone achieve your goals. It´s simple, accessible and flexible. Give a boost in your focus and results using the Pomodoro technique.",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en" className={nunito.className}>
@@ -27,7 +28,7 @@ export default function RootLayout({
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
-          storageKey='@pomo-pomodoro'
+          storageKey="@pomo-pomodoro"
         >
           {children}
         </ThemeProvider>
@@ -35,7 +36,7 @@ export default function RootLayout({
         <SpeedInsights />
       </body>
 
-      <GoogleTagManager gtmId='G-0EQRT3GR5Z' />
+      <GoogleAnalytics gaId="G-0EQRT3GR5Z" />
     </html>
-  )
+  );
 }
